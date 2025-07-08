@@ -3,7 +3,7 @@ const taskInput = document.getElementById('task-input');
 const taskList = document.getElementById("task-list");
 taskForm.addEventListener('submit', function(event) {
     event.preventDefault();
-    const taskText = taskInput.ariaValueMax.trim();
+    const taskText = taskInput.value.trim();
     // console.log(taskText)
     if(taskText === "") {
         alert("Please enter a task!!!")
@@ -12,7 +12,6 @@ taskForm.addEventListener('submit', function(event) {
     addTask(taskText);
     taskInput.value = "";
 });
-
 function addTask(taskText) {
     // created one list tag
     const li = document.createElement('li');
@@ -28,4 +27,17 @@ function addTask(taskText) {
     li.appendChild(span);
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
-}
+};
+taskList.addEventListener('click', function(event) {
+    const target = event.target;
+    console.log(target)
+    if(target.classList.contains('delete-btn'))  {
+        const li = target.parentElement;
+        taskList.removeChild(li);
+    } else if(target.classList.contains('task-item') || target.classList.contains('task-text')) {
+        const li = target.closest('.task-item');
+        if(li) {
+            li.classList.toggle('completed')
+        }
+    }
+})
